@@ -66,10 +66,19 @@ def main():
     print(f'The total US population is {total_us_population:n}.')
     # territories_only = [s for s in states if s.n_ec_votes == 0]
     states_only = [s for s in states if s.n_ec_votes > 0]
+    print(f"The states are {states_only[0]}")
     total_states_only_population = sum([s.population for s in states_only])
     print(
         f'The total US population from states is {total_states_only_population:n}.'
     )
+    total_states_boundary_ec_votes = sum([s.n_ec_votes for s in states_only if (37,956,694 < s.population < 41,119,752)])
+    
+    print(f"The total EC votes for those states within that boundary is {total_states_boundary_ec_votes:n}")
+    ec_votes_cali = [s.n_ec_votes for s in states_only if s.name == "California"]
+    ec_votes_cali = ec_votes_cali[0]
+    sub_ec_votes = total_states_boundary_ec_votes - ec_votes_cali
+    print(f"California has {ec_votes_cali} electoral votes.")
+    print(f"The difference between the boundary states' and California's electoral votes is {sub_ec_votes}")
     print(
         'This means that there are '
         f'{total_us_population - total_states_only_population:n} people'
